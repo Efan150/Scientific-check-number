@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Number Checker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #e0e0e0; /* Warna abu-abu */
+            color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            justify-content: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            background: #d6d6d6; /* Warna abu-abu terang */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        #menu {
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        #menu button {
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: #2E8B57; /* Warna hijau */
+            color: white;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        #menu button:hover {
+            background-color: #206040; /* Hijau lebih tua */
+        }
+
+        h1 {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #2E8B57; /* Warna hijau */
+        }
+
+        h2 {
+            font-size: 1.1em;
+            font-weight: normal;
+            color: #444;
+        }
+
+        input {
+            padding: 10px;
+            margin: 12px 0;
+            width: 100%;
+            border: 1px solid #2E8B57; /* Warna hijau */
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        #runBtn {
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: #2E8B57;
+            color: white;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        #runBtn:hover {
+            background-color: #206040;
+        }
+
+        #result {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        #aboutInfo {
+            font-size: 0.9em;
+            color: #444;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div id="menu">
+            <button onclick="saveFile()">File</button>
+            <button onclick="editText()">Edit</button>
+            <button onclick="showAbout()">About Us</button>
+        </div>
+
+        <h1>Assignment Automata</h1>
+        <h2>Scientific Number Checker</h2>
+
+        <input type="text" id="numberInput" placeholder="Enter a number">
+        <button id="runBtn" onclick="checkNumber()">Run</button>
+
+        <p id="result"></p>
+        <p id="aboutInfo"></p>
+    </div>
+
+    <script>
+        function isScientificNumber(num) {
+            let pattern = /^-?\d+(\.\d+)?([eE][-+]?\d+)?$/;
+            return pattern.test(num);
+        }
+
+        function checkNumber() {
+            let input = document.getElementById("numberInput").value;
+            let resultText = isScientificNumber(input) ? "Yes, it is a number" : "No, it is not a number";
+            document.getElementById("result").innerText = resultText;
+        }
+
+        function saveFile() {
+            let input = document.getElementById("numberInput").value;
+            let blob = new Blob([input], { type: "text/plain" });
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "scientific_number.txt";
+            link.click();
+        }
+
+        function editText() {
+            let inputField = document.getElementById("numberInput");
+            let action = prompt("Type 'copy' to copy or 'paste' to paste:");
+            if (action === "copy") {
+                inputField.select();
+                document.execCommand("copy");
+                alert("Copied!");
+            } else if (action === "paste") {
+                navigator.clipboard.readText().then(text => {
+                    inputField.value = text;
+                });
+            } else {
+                alert("Invalid action!");
+            }
+        }
+
+        function showAbout() {
+            document.getElementById("aboutInfo").innerText = "Nama: Sefanya R. Kambey | NIM: 231011060035";
+        }
+    </script>
+
+</body>
+
+</html>
